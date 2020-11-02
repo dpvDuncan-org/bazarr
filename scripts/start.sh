@@ -6,14 +6,14 @@ USERNAME=$(getent passwd $PUID | cut -d: -f1)
 
 if [ ! $GROUPNAME ]
 then
-        addgroup -g $PGID <groupname>
-        GROUPNAME=<groupname>
+        addgroup -g $PGID bazarr
+        GROUPNAME=bazarr
 fi
 
 if [ ! $USERNAME ]
 then
-        adduser -G $GROUPNAME -u $PUID -D <username>
-        USERNAME=<username>
+        adduser -G $GROUPNAME -u $PUID -D bazarr
+        USERNAME=bazarr
 fi
 
-su $USERNAME -c ''
+su $USERNAME -c 'python3 /opt/bazarr/bazarr.py --no-update --config /config'

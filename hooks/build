@@ -7,6 +7,9 @@ source hooks/.config
 echo "✅ Will build the following architectures: $(IFS=, ; echo "${build_architectures[@]}")"
 echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 
+BAZARR_RELEASE=$(curl -sX GET "https://api.github.com/repos/morpheus65535/bazarr/releases" | jq -r '.[0] | .tag_name')
+bazarr_url=$(curl -s https://api.github.com/repos/morpheus65535/bazarr/releases/tags/"${BAZARR_RELEASE}" | jq -r '.tarball_url')
+
 for arch in ${build_architectures[@]}; do
   echo "✅ building $arch"
   echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
@@ -15,6 +18,8 @@ for arch in ${build_architectures[@]}; do
     --squash \
     --platform=${docker_arch_map[${arch}]} \
     --build-arg BASE_IMAGE_PREFIX=${base_image_prefix_map[${arch}]} \
+    --build-arg BAZARR_RELEASE=${BAZARR_RELEASE} \
+    --build-arg bazarr_url=${bazarr_url} \
     --file /build/$DOCKERFILE_PATH \
     --tag "${IMAGE_NAME}-${arch}"  \
     /build
