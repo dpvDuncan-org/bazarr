@@ -20,9 +20,9 @@ for arch in ${build_architectures[@]}; do
     --build-arg BASE_IMAGE_PREFIX=${base_image_prefix_map[${arch}]} \
     --build-arg BAZARR_RELEASE=${BAZARR_RELEASE} \
     --build-arg bazarr_url=${bazarr_url} \
-    --file /build/$DOCKERFILE_PATH \
+    --file /build/${IMAGE_NAME_simple}/${DOCKERFILE_PATH} \
     --tag "${IMAGE_NAME}-${arch}"  \
-    /build
+    /build/${IMAGE_NAME_simple}
 done
 
 echo "✅ images built:"
