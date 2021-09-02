@@ -13,13 +13,13 @@ ENV BAZARR_RELEASE=${BAZARR_RELEASE}
 COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
-RUN apk add --no-cache --virtual=.build-dependencies g++ gcc libxml2-dev libxslt-dev py3-pip python3-dev libffi-dev
+RUN apk add --no-cache --virtual=.build-dependencies make g++ gcc libxml2-dev libxslt-dev py3-pip python3-dev libffi-dev
 RUN apk add --no-cache ca-certificates curl ffmpeg libxml2 libxslt python3 unrar unzip libffi
 RUN mkdir -p /opt/bazarr /config
 RUN curl -o - -L "${bazarr_url}" | tar xz -C /opt/bazarr --strip-components=1
 RUN rm -rf /opt/bazarr/bin
-RUN pip3 install wheel
-RUN pip3 install --no-cache-dir -U  -r /opt/bazarr/requirements.txt
+RUN pip3 install --no-cache-dir -U wheel
+RUN pip3 install --no-cache-dir -U -r /opt/bazarr/requirements.txt
 RUN apk del --purge .build-dependencies
 RUN chmod -R 777 /opt/bazarr /start.sh
 
