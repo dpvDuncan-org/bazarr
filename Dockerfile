@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG BASE_IMAGE_PREFIX
 
-FROM ${BASE_IMAGE_PREFIX}alpine:3.14
+FROM ${BASE_IMAGE_PREFIX}alpine:3.13
 
 ARG bazarr_url
 ARG BAZARR_RELEASE
