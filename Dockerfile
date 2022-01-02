@@ -18,7 +18,7 @@ RUN apk add --no-cache ca-certificates curl ffmpeg libxml2 libxslt python3 unrar
 RUN mkdir -p /opt/bazarr /config
 RUN curl -o - -L "${bazarr_url}" | tar xz -C /opt/bazarr --strip-components=1
 RUN rm -rf /opt/bazarr/bin
-RUN pip3 install --no-cache-dir wheel
+RUN pip3 install --no-cache-dir wheel setuptools
 RUN pip3 install --no-cache-dir -r /opt/bazarr/requirements.txt
 RUN apk del --purge .build-dependencies
 RUN chmod -R 777 /opt/bazarr /start.sh
