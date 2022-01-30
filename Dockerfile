@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG BASE_IMAGE_PREFIX
 
-FROM ${BASE_IMAGE_PREFIX}alpine:3.13
+FROM ${BASE_IMAGE_PREFIX}alpine
 
 ARG bazarr_url
 ARG BAZARR_RELEASE
@@ -13,8 +13,8 @@ ENV BAZARR_RELEASE=${BAZARR_RELEASE}
 COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
-RUN apk add --no-cache --virtual=.build-dependencies make g++ gcc libxml2-dev libxslt-dev py3-pip python3-dev libffi-dev
-RUN apk add --no-cache ca-certificates curl ffmpeg libxml2 libxslt python3 unrar unzip libffi
+RUN apk add --no-cache --virtual=.build-dependencies gcc py3-pip python3-dev musl-dev
+RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy
 RUN mkdir -p /opt/bazarr /config
 RUN curl -o - -L "${bazarr_url}" | tar xz -C /opt/bazarr --strip-components=1
 RUN rm -rf /opt/bazarr/bin
