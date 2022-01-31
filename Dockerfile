@@ -17,7 +17,8 @@ RUN apk -U --no-cache upgrade
 RUN apk add --no-cache --virtual=.build-dependencies gcc py3-pip python3-dev musl-dev
 RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy py3-setuptools
 RUN mkdir -p /opt/bazarr /config
-RUN curl -o - -L "${bazarr_url}" | tar xz -C /opt/bazarr --strip-components=1
+# RUN curl -o - -L "${bazarr_url}" | tar xz -C /opt/bazarr --strip-components=1
+RUN curl -o - -L "${bazarr_url}" | busybox unzip - -d /opt/bazarr
 RUN rm -rf /opt/bazarr/bin
 RUN pip3 install --no-cache-dir wheel
 RUN pip3 install --no-cache-dir -r /opt/bazarr/requirements.txt
