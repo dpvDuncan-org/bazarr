@@ -11,7 +11,7 @@ echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯�
 # bazarr_url=$(curl -s https://api.github.com/repos/morpheus65535/bazarr/releases/tags/"${BAZARR_RELEASE}" | jq -r '.tarball_url')
 
 BAZARR_RELEASE=$(curl -s https://api.github.com/repos/morpheus65535/bazarr/releases/latest | jq -r '.tag_name')
-bazarr_url=$(curl -s https://api.github.com/repos/morpheus65535/bazarr/releases/latest | jq -r '.tarball_url')
+bazarr_url=https://github.com/morpheus65535/bazarr/releases/download/${BAZARR_RELEASE}/bazarr.zip
 
 for arch in ${build_architectures[@]}; do
   echo "✅ building $arch"
