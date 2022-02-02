@@ -9,7 +9,7 @@ echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯�
 
 # BAZARR_RELEASE=$(curl -sX GET "https://api.github.com/repos/morpheus65535/bazarr/releases" | jq -r '.[0] | .tag_name')
 BAZARR_RELEASE=$(curl -s https://api.github.com/repos/morpheus65535/bazarr/releases/latest | jq -r '.tag_name')
-bazarr_url=$(curl -k -s https://github.com/morpheus65535/bazarr/releases/tags/${BAZARR_RELEASE} | jq -r '.assets[].browser_download_url')
+bazarr_url=$(curl -k -s https://api.github.com/repos/morpheus65535/bazarr/releases/tags/${BAZARR_RELEASE} | jq -r '.assets[].browser_download_url')
 
 echo bazarr_url = ${bazarr_url}
 for arch in ${build_architectures[@]}; do
