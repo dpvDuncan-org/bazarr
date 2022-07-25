@@ -14,8 +14,11 @@ ENV TZ=Europe/Paris
 COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
-RUN apk add --no-cache --virtual=.build-dependencies gcc py3-pip python3-dev musl-dev
+RUN apk add --no-cache --virtual=.build-dependencies py3-pip python3-dev build-base
 RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy py3-setuptools
+RUN curl -o - -L https://www.rarlab.com/rar/unrarsrc-6.1.7.tar.gz | tar xz -C /tmp
+WORKDIR /tmp/unrar
+RUN make && make install
 RUN mkdir -p /opt/bazarr /config
 # RUN curl -o - -L "${bazarr_url}" | tar xz -C /opt/bazarr --strip-components=1
 RUN curl -o bazarr.zip -L "${bazarr_url}"
@@ -33,5 +36,6 @@ RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 # ports and volumes
 EXPOSE 6767
 VOLUME /config
+WORKDIR /opt/bazarr
 
 CMD ["/start.sh"]
