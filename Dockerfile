@@ -18,9 +18,8 @@ COPY bazarr.zip /tmp/bazarr.zip
 RUN busybox unzip /tmp/bazarr.zip -d /opt/bazarr
 RUN rm -rf /tmp/bazarr.zip
 RUN rm -rf /opt/bazarr/bin
-RUN pip install --no-cache-dir wheel
+# RUN pip install --no-cache-dir wheel
 RUN pip install --no-cache-dir -r /opt/bazarr/requirements.txt
-RUN pip install --upgrade setuptools
 RUN apk del --purge .build-dependencies
 RUN chmod -R 777 /opt/bazarr /start.sh
 
