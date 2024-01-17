@@ -16,4 +16,4 @@ then
         USERNAME=bazarr
 fi
 
-su $USERNAME -c 'python3 /opt/bazarr/bazarr.py --no-update --config /config'
+su $USERNAME -c '. /opt/bazarr/venv/bin/activate && python3 /opt/bazarr/bazarr.py --no-update --config /config'
