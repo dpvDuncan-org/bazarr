@@ -18,6 +18,7 @@ COPY bazarr.zip /tmp/bazarr.zip
 RUN busybox unzip /tmp/bazarr.zip -d /opt/bazarr
 RUN rm -rf /tmp/bazarr.zip
 RUN rm -rf /opt/bazarr/bin
+WORKDIR /opt/bazarr
 RUN python -m venv venv
 RUN . venv/bin/activate && pip install --no-cache-dir wheel
 RUN . venv/bin/activate && pip install --no-cache-dir -r /opt/bazarr/requirements.txt
@@ -36,6 +37,7 @@ ENV BAZARR_RELEASE=${BAZARR_RELEASE}
 ENV TZ=Europe/Paris
 
 COPY --from=builder / /
+WORKDIR /opt/bazarr
 # ports and volumes
 EXPOSE 6767
 VOLUME /config
