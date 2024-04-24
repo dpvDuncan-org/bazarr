@@ -7,7 +7,7 @@ on:
   push:
 
 env:
-  IMAGE_NAME: dpvduncan/sonarr:latest
+  IMAGE_NAME: dpvduncan/bazarr:latest
 
 jobs:
   build:
