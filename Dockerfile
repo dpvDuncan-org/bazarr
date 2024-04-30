@@ -7,12 +7,8 @@ ARG TARGETARCH
 COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
-RUN apk add --no-cache --virtual=.build-dependencies py3-pip python3-dev build-base
-RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy py3-setuptools
-COPY unrar.tar.gz /tmp/unrar.tar.gz
-RUN tar -xzf /tmp/unrar.tar.gz -C /tmp
-WORKDIR /tmp/unrar
-RUN make && make install
+# RUN apk add --no-cache --virtual=.build-dependencies py3-pip python3-dev build-base
+RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy py3-setuptools 7zip
 RUN mkdir -p /opt/bazarr /config
 COPY bazarr.zip /tmp/bazarr.zip
 RUN busybox unzip /tmp/bazarr.zip -d /opt/bazarr
@@ -22,7 +18,7 @@ WORKDIR /opt/bazarr
 RUN python -m venv venv
 RUN . venv/bin/activate && pip install --no-cache-dir wheel
 RUN . venv/bin/activate && pip install --no-cache-dir -r /opt/bazarr/requirements.txt
-RUN apk del --purge .build-dependencies
+# RUN apk del --purge .build-dependencies
 RUN chmod -R 777 /opt/bazarr /start.sh
 
 RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*

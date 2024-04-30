@@ -39,7 +39,6 @@ jobs:
         BAZARR_RELEASE=$(curl -s https://api.github.com/repos/morpheus65535/bazarr/releases/latest | jq -r '.tag_name')
         bazarr_url=$(curl -k -s https://api.github.com/repos/morpheus65535/bazarr/releases/tags/${BAZARR_RELEASE} | jq -r '.assets[].browser_download_url')
         curl -o bazarr.zip -L "${bazarr_url}"
-        curl -o unrar.tar.gz -L https://www.rarlab.com/rar/unrarsrc-7.0.8.tar.gz
         echo "BAZARR_RELEASE=${SONARR_RELEASE}" >> ${GITHUB_ENV}
 
     - name: Build
