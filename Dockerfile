@@ -1,13 +1,17 @@
 # syntax=docker/dockerfile:1
 
-FROM alpine AS builder
+FROM alpine
 
-ARG TARGETARCH
+ARG BAZARR_RELEASE
+
+ENV PUID=0
+ENV PGID=0
+ENV BAZARR_RELEASE=${BAZARR_RELEASE}
+ENV TZ=Europe/Paris
 
 COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
-# RUN apk add --no-cache --virtual=.build-dependencies py3-pip python3-dev build-base
 RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy py3-setuptools 7zip
 RUN mkdir -p /opt/bazarr /config
 COPY bazarr.zip /tmp/bazarr.zip
@@ -18,21 +22,10 @@ WORKDIR /opt/bazarr
 RUN python -m venv venv
 RUN . venv/bin/activate && pip install --no-cache-dir wheel
 RUN . venv/bin/activate && pip install --no-cache-dir -r /opt/bazarr/requirements.txt
-# RUN apk del --purge .build-dependencies
 RUN chmod -R 777 /opt/bazarr /start.sh
 
-RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+RUN rm -rf /tmp/* /var/tmp/*
 
-FROM scratch
-
-ARG BAZARR_RELEASE
-
-ENV PUID=0
-ENV PGID=0
-ENV BAZARR_RELEASE=${BAZARR_RELEASE}
-ENV TZ=Europe/Paris
-
-COPY --from=builder / /
 WORKDIR /opt/bazarr
 # ports and volumes
 EXPOSE 6767
