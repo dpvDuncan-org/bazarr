@@ -18,7 +18,7 @@ RUN rm -rf /opt/bazarr/bin
 WORKDIR /opt/bazarr
 RUN python -m venv venv
 RUN . venv/bin/activate && pip install --no-cache-dir wheel
-RUN sed -i 's/webrtcvad-wheels//g' /opt/bazarr/requirements.txt
+RUN sed -i 's/webrtcvad-wheels.*//g' /opt/bazarr/requirements.txt
 RUN . venv/bin/activate && pip install --no-cache-dir -r /opt/bazarr/requirements.txt
 # RUN apk del --purge .build-dependencies
 RUN chmod -R 777 /opt/bazarr /start.sh
