@@ -9,6 +9,7 @@ COPY scripts/start.sh /
 RUN apk -U --no-cache upgrade
 # RUN apk add --no-cache --virtual=.build-dependencies py3-pip python3-dev build-base
 RUN apk add --no-cache ca-certificates curl ffmpeg python3 libffi py3-lxml py3-libxml2 py3-numpy py3-setuptools 7zip
+RUN apk add --no-cache py3-webrtcvad py3-webrtcvad-pyc --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
 RUN mkdir -p /opt/bazarr /config
 COPY bazarr.zip /tmp/bazarr.zip
 RUN busybox unzip /tmp/bazarr.zip -d /opt/bazarr
