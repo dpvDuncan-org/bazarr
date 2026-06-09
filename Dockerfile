@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM alpine AS builder
+FROM alpine:edge AS builder
 
 ARG TARGETARCH
 
